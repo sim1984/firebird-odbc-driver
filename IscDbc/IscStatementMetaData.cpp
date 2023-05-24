@@ -74,6 +74,11 @@ bool IscStatementMetaData::isNullable(int index)
 	return sqlda->isNullable (index);
 }
 
+int IscStatementMetaData::getOctetLength(int index)
+{
+	return sqlda->getOctetLength(index);
+}
+
 int IscStatementMetaData::getColumnDisplaySize(int index)
 {
 	return sqlda->getColumnDisplaySize(index);

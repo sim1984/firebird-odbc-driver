@@ -650,6 +650,32 @@ void Sqlda::print()
 		}
 }
 
+int Sqlda::getOctetLength(int index)
+{
+	CAttrSqlVar* var = orgVar(index);
+
+	switch (var->sqltype & ~1)
+	{
+	case SQL_TYPE_TIME:
+		return sizeof(TIME_STRUCT);
+
+	case SQL_TYPE_DATE:
+		return sizeof(DATE_STRUCT);
+
+	case SQL_TIMESTAMP:
+		return sizeof(TIMESTAMP_STRUCT);
+
+	case SQL_ARRAY:
+		return var->array->arrOctetLength;
+		//		return MAX_ARRAY_LENGTH;
+
+	case SQL_BLOB:
+		return MAX_BLOB_LENGTH;
+	}
+
+	return var->sqllen;
+}
+
 // Warning!
 // It's hack, for exclude system filed description
 // Return SQLDA for all system field has 31 length 
@@ -864,15 +890,17 @@ int Sqlda::getSqlType(CAttrSqlVar *var, int &realSqlType)
 	switch (var->sqltype & ~1)
 	{
 	case SQL_TEXT:
-		if ( var->sqllen == 1 && var->sqlsubtype == 1 )
-			return (realSqlType = JDBC_TINYINT);
-		else if ( ( var->sqlsubtype == 3 // UNICODE_FSS
+		if (var->sqlsubtype == 1 )
+			return (realSqlType = JDBC_BINARY); // OCTETS
+		if ( ( var->sqlsubtype == 3 // UNICODE_FSS
 				    || var->sqlsubtype == 4 ) // UTF8
 			&& !(var->sqllen % getCharsetSize( var->sqlsubtype )) )
 			return (realSqlType = JDBC_WCHAR);
 		return (realSqlType = JDBC_CHAR);
 
 	case SQL_VARYING:
+		if (var->sqlsubtype == 1)
+			return (realSqlType = JDBC_VARBINARY); // OCTETS
 		if ( ( var->sqlsubtype == 3 // UNICODE_FSS
 				    || var->sqlsubtype == 4 ) // UTF8
 			&& !(var->sqllen % getCharsetSize( var->sqlsubtype )) )
@@ -932,8 +960,6 @@ const char* Sqlda::getSqlTypeName ( CAttrSqlVar *var )
 	switch (var->sqltype & ~1)
 	{
 	case SQL_TEXT:
-		if ( var->sqllen == 1 && var->sqlsubtype == 1 )
-			return "TINYINT";
 		return "CHAR";
 
 	case SQL_VARYING:

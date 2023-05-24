@@ -3565,8 +3565,11 @@ SQLRETURN OdbcStatement::sqlColAttribute( int column, int fieldId, SQLPOINTER at
 
 		case SQL_COLUMN_PRECISION:
 		case SQL_DESC_PRECISION:
-		case SQL_DESC_OCTET_LENGTH:
 			value = metaData->getPrecision (column);
+			break;
+
+		case SQL_DESC_OCTET_LENGTH:
+			value = metaData->getOctetLength(column);
 			break;
 
 		case SQL_COLUMN_SCALE:

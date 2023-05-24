@@ -547,6 +547,7 @@ public:
 	virtual int			getScale(int index) = 0;
 	virtual bool		isNullable (int index) = 0;
 	virtual int			getColumnDisplaySize(int index) = 0;
+	virtual int			getOctetLength(int index) = 0;
 	virtual const char* getColumnLabel(int index) = 0;
 	virtual const char* getSqlTypeName(int index) = 0;
 	virtual const char* getColumnName(int index) = 0;

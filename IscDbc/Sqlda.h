@@ -86,6 +86,7 @@ public:
 	int getNumPrecRadix(int index);
 	const char* getColumnLabel (int index);
 	const char* getColumnName (int index);
+	int getOctetLength(int index);
 	int getColumnDisplaySize (int index);
 	short getSubType(int index);
 	int getColumnType (int index, int &realSqlType);
