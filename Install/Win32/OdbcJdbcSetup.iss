@@ -27,8 +27,9 @@
 ;
 ;
 
-#define MSVC_VERSION 9
+#define MSVC_VERSION 14
 #define BUILDCONFIG "release"
+#define PlatformTarget "x64"
 
 #if MSVC_VERSION==7
 #define BUILD_ENV "MsVc70.win"
@@ -36,6 +37,8 @@
 #define BUILD_ENV "MsVc80.win"
 #elif MSVC_VERSION==9
 #define BUILD_ENV "MsVc90.win"
+#elif MSVC_VERSION==14
+#define BUILD_ENV "MsVc140.win"
 #else
 BUILD_ENV undefined
 #endif
@@ -87,7 +90,7 @@ AppPublisherURL={#FIREBIRD_URL}
 AppSupportURL={#FIREBIRD_URL}
 AppUpdatesURL={#FIREBIRD_URL}
 
-DefaultDirName={pf}\Firebird\Firebird_ODBC
+DefaultDirName={autopf}\Firebird\Firebird_ODBC
 DefaultGroupName=Firebird\Firebird ODBC Driver
 UninstallDisplayIcon={sys}\OdbcFb.dll
 UninstallFilesDir={localappdata}\OdbcFb
@@ -106,7 +109,6 @@ Compression=lzma
 SolidCompression=true
 
 WizardImageFile={#SOURCE_DOCS}\Win32\firebird-logo1.bmp
-WizardImageBackColor=clWhite
 WizardSmallImageFile={#SOURCE_DOCS}\Win32\firebird-logo2.bmp
 
 #if PlatformTarget == "x64"
