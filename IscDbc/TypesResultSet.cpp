@@ -27,6 +27,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <cstdint>
 
 #include "IscDbc.h"
 #include "TypesResultSet.h"

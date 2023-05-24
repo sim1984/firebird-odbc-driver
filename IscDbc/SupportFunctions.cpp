@@ -29,6 +29,7 @@
 #include <string.h>
 #include <sql.h>
 #include <sqlext.h>
+#include <cstdint>
 #include "Mlist.h"
 #include "SupportFunctions.h"
 

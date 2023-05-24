@@ -33,6 +33,7 @@
 #include "IscConnection.h"
 #include "IscStatement.h"
 #include "SQLError.h"
+#include <cstdint>
 
 #define SET_INFO_FROM_SUBTYPE( a, b, c ) arrSubTypeElement == 1 ? (a) :  arrSubTypeElement == 2 ? (b) : (c)
 

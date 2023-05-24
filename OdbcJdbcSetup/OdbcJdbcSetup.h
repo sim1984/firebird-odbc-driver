@@ -25,9 +25,6 @@
 #if !defined(_ODBCJDBCSETUP_H_INCLUDED_)
 #define _ODBCJDBCSETUP_H_INCLUDED_
 
-#include <windows.h>
-#include "../IscDbc/JString.h"
-
 #ifdef _WINDOWS
 #include <windows.h>
 
@@ -42,6 +39,8 @@
 #define snprintf		_snprintf
 #define swprintf		_snwprintf
 #endif
+
+#include "../IscDbc/JString.h"
 
 #define ISLOWER(c)			((c) >= 'a' && (c) <= 'z')
 #define UPPER(c)			((ISLOWER (c)) ? (c) - 'a' + 'A' : (c))

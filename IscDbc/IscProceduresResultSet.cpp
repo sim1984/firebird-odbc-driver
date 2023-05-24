@@ -30,6 +30,7 @@
 #include "IscStatement.h"
 #include "IscProceduresResultSet.h"
 #include "IscDatabaseMetaData.h"
+#include <cstdint>
 
 namespace IscDbcLibrary {
 

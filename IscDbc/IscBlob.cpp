@@ -34,6 +34,7 @@
 #include "IscConnection.h"
 #include "IscStatement.h"
 #include "SQLError.h"
+#include <cstdint>
 
 extern short conwBinToHexStr[];
 

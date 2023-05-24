@@ -664,28 +664,28 @@ SQLRETURN OdbcConnection::sqlDriverConnect(SQLHWND hWnd, const SQLCHAR * connect
 
 	if (!dsn.IsEmpty())
 	{
-		r = appendString (r, SETUP_DSN"=");
+		r = appendString (r, SETUP_DSN "=");
 		r = appendString (r, dsn);
 	}
 
 	if (!driver.IsEmpty())
 	{
 		if ( r > returnString )
-			r = appendString (r, ";"SETUP_DRIVER"=");
+			r = appendString (r, ";" SETUP_DRIVER "=");
 		else
-			r = appendString (r, SETUP_DRIVER"=");
+			r = appendString (r, SETUP_DRIVER "=");
 		r = appendString (r, driver);
 	}
 
 	if (!databaseName.IsEmpty())
 	{
-		r = appendString (r, ";"SETUP_DBNAME"=");
+		r = appendString (r, ";" SETUP_DBNAME "=");
 		r = appendString (r, databaseName);
 	}
 
 	if (!charset.IsEmpty())
 	{
-		r = appendString (r, ";"KEY_DSN_CHARSET"=");
+		r = appendString (r, ";" KEY_DSN_CHARSET "=");
 		r = appendString (r, charset);
 	}
 
@@ -722,7 +722,7 @@ SQLRETURN OdbcConnection::sqlDriverConnect(SQLHWND hWnd, const SQLCHAR * connect
 	{
 		if (!password.IsEmpty())
 		{
-			r = appendString (r, ";"KEY_DSN_PWD"=");
+			r = appendString (r, ";" KEY_DSN_PWD "=");
 
 			if ( connection->getUseAppOdbcVersion() == SQL_OV_ODBC3 )
 			{
@@ -737,25 +737,25 @@ SQLRETURN OdbcConnection::sqlDriverConnect(SQLHWND hWnd, const SQLCHAR * connect
 
 		if (!account.IsEmpty())
 		{
-			r = appendString (r, ";"KEY_DSN_UID"=");
+			r = appendString (r, ";" KEY_DSN_UID "=");
 			r = appendString (r, account);
 		}
 
 		if (!role.IsEmpty())
 		{
-			r = appendString (r, ";"SETUP_ROLE"=");
+			r = appendString (r, ";" SETUP_ROLE "=");
 			r = appendString (r, role);
 		}
 
 		if (!client.IsEmpty())
 		{
-			r = appendString (r, ";"SETUP_CLIENT"=");
+			r = appendString (r, ";" SETUP_CLIENT "=");
 			r = appendString (r, client);
 		}
 
 		if (!filedsn.IsEmpty())
 		{
-			r = appendString (r, ";"KEY_FILEDSN"=");
+			r = appendString (r, ";" KEY_FILEDSN "=");
 			r = appendString (r, filedsn);
 		}
 

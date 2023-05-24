@@ -54,6 +54,7 @@
 #include <memory.h>
 #include <stdio.h>
 #include <string.h>
+#include <cstdint>
 #include "IscDbc.h"
 #include "Sqlda.h"
 #include "SQLError.h"
