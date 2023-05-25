@@ -90,7 +90,7 @@ AppPublisherURL={#FIREBIRD_URL}
 AppSupportURL={#FIREBIRD_URL}
 AppUpdatesURL={#FIREBIRD_URL}
 
-DefaultDirName={autopf}\Firebird\Firebird_ODBC
+DefaultDirName={pf}\Firebird\Firebird_ODBC
 DefaultGroupName=Firebird\Firebird ODBC Driver
 UninstallDisplayIcon={sys}\OdbcFb.dll
 UninstallFilesDir={localappdata}\OdbcFb
