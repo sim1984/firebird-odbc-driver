@@ -31,8 +31,8 @@ namespace IscDbcLibrary {
 
 class IscTablesResultSet : public IscMetaDataResultSet  
 {
-	int sqlAllParam;
-	int curentRowAllParam;
+	bool sqlAllTypes;
+	int currentRowAllTypes;
 
 public:
 	virtual bool nextFetch();

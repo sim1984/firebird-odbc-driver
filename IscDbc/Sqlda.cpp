@@ -933,8 +933,13 @@ int Sqlda::getSqlType(CAttrSqlVar *var, int &realSqlType)
 		return SET_INFO_FROM_SUBTYPE ( JDBC_NUMERIC, JDBC_DECIMAL, realSqlType);
 
 	case SQL_BLOB:
-		if (var->sqlsubtype == 1)
-			return (realSqlType = JDBC_LONGVARCHAR);
+		if (var->sqlsubtype == 1) {
+			if (var->sqlscale == 3 // UNICODE_FSS
+				|| var->sqlscale == 4) // UTF8
+				return (realSqlType = JDBC_WLONGVARCHAR);
+			else
+			    return (realSqlType = JDBC_LONGVARCHAR);
+		}
 		return (realSqlType = JDBC_LONGVARBINARY);
 
 	case SQL_TIMESTAMP:
