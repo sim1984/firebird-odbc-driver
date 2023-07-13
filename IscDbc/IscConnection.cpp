@@ -1927,15 +1927,15 @@ void IscConnection::openDatabase(const char * dbName, Properties * properties)
 	catch ( SQLException& exception )
 	{
 		delete attachment;
-		attachment = NULL;
-		GDS = NULL;
+		attachment = nullptr;
+		GDS = nullptr;
 		throw SQLEXCEPTION ( (SqlCode)exception.getSqlcode(), exception.getFbcode(), exception.getText() );
 	}
 	catch (...)
 	{
 		delete attachment;
-		attachment = NULL;
-		GDS = NULL;
+		attachment = nullptr;
+		GDS = nullptr;
 		throw;
 	}
 }

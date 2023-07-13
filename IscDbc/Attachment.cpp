@@ -182,20 +182,36 @@ void Attachment::openDatabase(const char *dbName, Properties *properties)
 
 	isRoles = false;
 	databaseName = dbName;
-	char dpb [2048], *p = dpb;
+	char dpb[2048];
+	memset(dpb, 0, sizeof(dpb));
+	char *p = dpb;
 	*p++ = isc_dpb_version1;
 
-	const char *user = properties->findValue ("user", NULL);
+	if (dialect && *dialect == '1')
+		databaseDialect = SQL_DIALECT_V5;
+	else
+		databaseDialect = SQL_DIALECT_V6;
+
+	const char *user = properties->findValue ("user", nullptr);
 
 	if (user && *user)
 	{
 		userName = user;
 		userAccess = user;
 		userType = 8;
-		*p++ = isc_dpb_user_name,
-		*p++ = (char)strlen (user);
+		*p++ = isc_dpb_user_name;
+		// for 3d SQL dialect username must be quoted
+		if (databaseDialect == SQL_DIALECT_V6) {
+			*p++ = (char)(strlen(user) + 2);
+			*p++ = '"';
+		}
+		else {
+			*p++ = (char)strlen(user);
+		}
 		for (const char *q = user; *q;)
 			*p++ = *q++;
+		if (databaseDialect == SQL_DIALECT_V6)
+			*p++ = '"';
 	}
 	else
 	{
@@ -232,6 +248,16 @@ void Attachment::openDatabase(const char *dbName, Properties *properties)
 		*p++ = (char)(connectionTimeout >> 24);
 	}
 
+	// Set SQL dialect.
+	// Interpretation of the role name depends on the dialect
+	*p++ = isc_dpb_sql_dialect;
+	*p++ = sizeof(int);
+	*p++ = (char)databaseDialect;
+	*p++ = (char)(databaseDialect >> 8);
+	*p++ = (char)(databaseDialect >> 16);
+	*p++ = (char)(databaseDialect >> 24);
+
+
 	const char *role = properties->findValue ("role", NULL);
 
 	if (role && *role)
@@ -239,8 +265,6 @@ void Attachment::openDatabase(const char *dbName, Properties *properties)
 		userAccess = role;
 
 		char *ch = (char *)(const char *)userAccess;
-		while ( (*ch = UPPER ( *ch )) )
-			++ch;
 
 		userType = 13;
 		isRoles = true;
@@ -553,8 +577,8 @@ int Attachment::getDatabaseDialect()
 
 void Attachment::checkAdmin()
 {
-	QUAD adm1 = (QUAD)71752869960019.0;
-	QUAD adm2 = (QUAD)107075219978611.0;
+	QUAD adm1 = (QUAD)71752869960019.0; // SYSDBA
+	QUAD adm2 = (QUAD)107075219978611.0; // sysdba
 	QUAD user = (QUAD)0;
 	memcpy((void *)&user,(const char *)userName,6);
 
