@@ -222,7 +222,7 @@ void IscStatement::delActiveLocalParamTransaction()
 	if ( transactionInfo.nodeParamTransaction )
 	{
 		delete transactionInfo.nodeParamTransaction;
-		transactionInfo.nodeParamTransaction = NULL;
+		transactionInfo.nodeParamTransaction = nullptr;
 	}
 
 	transactionInfo.setParam( connection->transactionInfo );
@@ -246,7 +246,7 @@ void IscStatement::declareLocalParamTransaction()
 		}
 
 		delete connection->tmpParamTransaction;
-		connection->tmpParamTransaction = NULL;
+		connection->tmpParamTransaction = nullptr;
 	}
 }
 

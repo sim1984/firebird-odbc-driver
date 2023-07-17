@@ -49,6 +49,9 @@ public:
 							stmtPrepare		= 256
 						};
 
+	explicit IscStatement(IscConnection* connect);
+	virtual ~IscStatement();
+
 	void freeStatementHandle();
 	void clearSelect();
 	void rollbackLocal();
@@ -67,7 +70,7 @@ public:
 	virtual bool executeProcedure();
 	virtual void prepareStatement (const char *sqlString);
 	void deleteResultSet (IscResultSet *resultSet);
-	IscStatement(IscConnection *connect);
+	
 	virtual int getUpdateCount();
 	virtual bool getMoreResults();
 	virtual void setCursorName (const char *name);
@@ -95,7 +98,7 @@ public:
 	virtual bool isActiveProcedure(){ return typeStmt == stmtProcedure; }
 	virtual bool isActiveModify(){ return !!(typeStmt & stmtModify); }
 	virtual bool isActiveNone(){ return typeStmt == stmtNone; }
-	virtual ~IscStatement();
+	
 
 	virtual int getStmtPlan(const void * value, int bufferLength,int *lengthPtr)
 	{ return getPlanStatement(connection, statementHandle,value,bufferLength,lengthPtr); }  
