@@ -806,6 +806,11 @@ int Sqlda::getPrecision(int index)
 										MAX_DECIMAL_LENGTH,
 										MAX_QUAD_LENGTH);
 
+	case SQL_INT128:
+		return SET_INFO_FROM_SUBTYPE(MAX_NUMERIC_INT128_LENGTH,
+			MAX_DECIMAL_INT128_LENGTH,
+			MAX_INT128_LENGTH);
+
 	case SQL_ARRAY:	
 		return var->array->arrOctetLength;
 //		return MAX_ARRAY_LENGTH;
@@ -839,6 +844,7 @@ int Sqlda::getNumPrecRadix(int index)
 	case SQL_LONG:
 	case SQL_QUAD:
 	case SQL_INT64:
+	case SQL_INT128:
 		return 10;
 	case SQL_FLOAT:
 	case SQL_DOUBLE:
@@ -932,6 +938,10 @@ int Sqlda::getSqlType(CAttrSqlVar *var, int &realSqlType)
 		realSqlType = JDBC_BIGINT;
 		return SET_INFO_FROM_SUBTYPE ( JDBC_NUMERIC, JDBC_DECIMAL, realSqlType);
 
+	case SQL_INT128:
+		realSqlType = JDBC_NUMERIC;
+		return SET_INFO_FROM_SUBTYPE(JDBC_NUMERIC, JDBC_DECIMAL, JDBC_NUMERIC);
+
 	case SQL_BLOB:
 		if (var->sqlsubtype == 1) {
 			if (var->sqlscale == 3 // UNICODE_FSS
@@ -991,6 +1001,9 @@ const char* Sqlda::getSqlTypeName ( CAttrSqlVar *var )
 
 	case SQL_INT64:
 		return SET_INFO_FROM_SUBTYPE ( "NUMERIC", "DECIMAL", "BIGINT");
+
+	case SQL_INT128:
+		return SET_INFO_FROM_SUBTYPE("NUMERIC", "DECIMAL", "INT128");
 
 	case SQL_BLOB:
 		if ( var->sqlsubtype == 1 )
@@ -1103,6 +1116,12 @@ void Sqlda::setValue(int slot, Value * value, IscStatement	*stmt)
 			var->sqltype = SQL_TIMESTAMP;
 			var->sqllen = sizeof (ISC_TIMESTAMP);
 			*(ISC_TIMESTAMP*)var->sqldata = IscStatement::getIscTimeStamp (value->data.timestamp);
+			break;
+
+		case Int128:
+			var->sqltype = SQL_INT128;
+			var->sqllen = sizeof(FB_I128);
+			*(FB_I128*)var->sqldata = IscStatement::getFbInt128(value->data.i128);
 			break;
 									
 		default:

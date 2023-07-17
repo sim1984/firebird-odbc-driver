@@ -48,6 +48,7 @@ public:
 	void addRef();
 	void loadClientLiblary( Properties *properties );
 	bool isFirebirdVer2_0(){ return majorFb == 2; }
+	bool isFirebirdVer3_0() { return majorFb == 3; }
 	void createDatabase(const char *dbName, Properties *properties);
 	void openDatabase(const char * dbName, Properties * properties);
 	Attachment();
@@ -86,14 +87,12 @@ public:
 	Mutex		mutex;
 };
 
-inline
-int Attachment::getUseSchemaIdentifier()
+inline int Attachment::getUseSchemaIdentifier()
 {
 	return useSchemaIdentifier;
 }
 
-inline
-int Attachment::getUseLockTimeoutWaitTransactions()
+inline int Attachment::getUseLockTimeoutWaitTransactions()
 {
 	return useLockTimeoutWaitTransactions;
 }

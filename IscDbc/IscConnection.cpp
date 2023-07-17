@@ -90,7 +90,7 @@ InfoTransaction::InfoTransaction()
 	transactionPending = false;
 	autoCommit = true;
 	transactionExtInit = 0;
-	nodeParamTransaction = NULL;
+	nodeParamTransaction = nullptr;
 }
 
 InfoTransaction::~InfoTransaction()
@@ -113,12 +113,12 @@ IscConnection::IscConnection(IscConnection * source)
 void IscConnection::init()
 {
 	useCount = 1;
-	metaData = NULL;
+	metaData = nullptr;
 	shareConnected = false;
-	attachment = NULL;
-	userEvents = NULL;
+	attachment = nullptr;
+	userEvents = nullptr;
 	useAppOdbcVersion = 3; // SQL_OV_ODBC3
-	tmpParamTransaction = NULL;
+	tmpParamTransaction = nullptr;
 }
 
 IscConnection::~IscConnection()
@@ -137,7 +137,7 @@ IscConnection::~IscConnection()
 
 bool IscConnection::isConnected()
 {
-	return attachment != NULL;
+	return attachment != nullptr;
 }
 
 void IscConnection::close()
@@ -156,7 +156,7 @@ void IscConnection::close()
 
 PreparedStatement* IscConnection::prepareStatement(const char * sqlString)
 {
-	IscPreparedStatement *statement = NULL;
+	IscPreparedStatement *statement = nullptr;
 
 	try
 	{
@@ -1845,6 +1845,11 @@ int IscConnection::hasRole(const char * schemaName, const char * roleName)
 
 void IscConnection::ping()
 {
+	ISC_STATUS      statusVector[20];
+	if (GDS->_ping && GDS->_ping(statusVector, &databaseHandle)) {
+		if (statusVector[1])
+			THROW_ISC_EXCEPTION(this, statusVector);
+	}
 }
 
 void IscConnection::sqlExecuteCreateDatabase(const char * sqlString)
@@ -1971,15 +1976,14 @@ int IscConnection::getInfoItem(char * buffer, int infoItem, int defaultValue)
 
 JString IscConnection::getInfoString(char * buffer, int infoItem, const char * defaultString)
 {
-	for (char *p = buffer; *p != isc_info_end;)
-		{
+	for (char *p = buffer; *p != isc_info_end;) {
 		char item = *p++;
 		int length = GDS->_vax_integer (p, 2);
 		p += 2;
 		if (item == infoItem)
 			return JString (p, length);
 		p += length;
-		}
+	}
 
 	return defaultString;			
 }

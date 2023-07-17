@@ -569,6 +569,9 @@
     <ClInclude Include="..\..\OdbcJdbcSetup\UsersTabUsers.h">
       <Filter>OdbcJdbcSetup\Header Files Setup</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\IscDbc\Int128.h">
+      <Filter>IscDbc\Header Files IscDbc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\OdbcJdbc.def">

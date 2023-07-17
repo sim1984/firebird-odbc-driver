@@ -44,7 +44,15 @@ enum Type {
 	BlobPtr,		// pointer to Blob object
 	SqlTimestamp,	// 64 bit version
 
-	Boolean
+	Boolean,
+
+	TimestampTZ_Ex,
+	TimeTZ_Ex,
+	TimestampTZ,
+	TimeTZ,
+	Int128,
+	DecFloat16,
+	DecFloat34
 	};
 
 // Type Encoded Record Types

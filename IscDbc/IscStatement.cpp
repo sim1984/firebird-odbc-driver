@@ -918,6 +918,16 @@ ISC_TIME IscStatement::getIscTime(SqlTime value)
 	return value.timeValue * ISC_TIME_SECONDS_PRECISION;
 }
 
+FB_I128 IscStatement::getFbInt128(FbInt128 value)
+{
+	FB_I128 i128;
+
+	i128.fb_data[0] = value.i128[0];
+	i128.fb_data[1] = value.i128[1];
+
+	return i128;
+}
+
 void IscStatement::clearSelect()
 {
 	if ( isActiveSelect() )

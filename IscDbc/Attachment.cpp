@@ -60,7 +60,7 @@ namespace IscDbcLibrary {
 Attachment::Attachment()
 {
 	useCount = 1;
-	GDS = NULL;
+	GDS = nullptr;
 	databaseHandle = NULL;
 	databaseAccess = OPEN_DB;
 	transactionHandle = NULL;
@@ -70,7 +70,7 @@ Attachment::Attachment()
 	charsetCode = 0; // NONE
 	useSchemaIdentifier = 0;
 	useLockTimeoutWaitTransactions = 0;
-	databaseProductName = "Interbase";
+	databaseProductName = "Firebird";
 	majorFb = 1;
 	minorFb = 0;
 	versionFb = 0;

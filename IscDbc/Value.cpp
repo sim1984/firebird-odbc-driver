@@ -102,11 +102,10 @@ void Value::setString(const char * string, bool copy)
 	copyFlag = copy;
 	data.string.length = (int)strlen (string);
 
-	if (copy)
-		{
+	if (copy) {
 		data.string.string = new char [data.string.length + 1];
 		strcpy (data.string.string, string);
-		}
+	}
 	else
 		data.string.string = (char*) string;
 }
@@ -170,6 +169,10 @@ void Value::setValue(Value * value)
 		case Date:
 			data.date = value->data.date;
 			break;
+
+		case Int128:
+			data.i128 = value->data.i128;
+			break;
 									
 		default:
 			NOT_YET_IMPLEMENTED;
@@ -184,12 +187,11 @@ void Value::setString(int length, const char * string, bool copy)
 	copyFlag = copy;
 	data.string.length = length;
 
-	if (copy)
-		{
+	if (copy) {
 		data.string.string = new char [length + 1];
 		memcpy (data.string.string, string, length);
 		data.string.string [length] = 0;
-		}
+	}
 	else
 		data.string.string = (char*) string;
 }
@@ -273,7 +275,7 @@ int Value::getString(int bufferSize, char * buffer)
 double Value::getDouble()
 {
 	switch (type)
-		{
+	{
 		case Null:
 			return 0;
 
@@ -298,7 +300,7 @@ double Value::getDouble()
 
 		default:
 			NOT_YET_IMPLEMENTED;
-		}
+	}
 
 	double divisor;
 	QUAD number = convertToQuad (divisor);
@@ -308,7 +310,7 @@ double Value::getDouble()
 float Value::getFloat()
 {
 	switch (type)
-		{
+	{
 		case Null:
 			return 0;
 
@@ -333,7 +335,7 @@ float Value::getFloat()
 
 		default:
 			NOT_YET_IMPLEMENTED;
-		}
+	}
 
 	double divisor;
 	QUAD number = convertToQuad (divisor);
@@ -344,7 +346,7 @@ int Value::compare(Value * value)
 {
 	if (type == value->type)
 		switch (type)
-			{
+		{
 			case Short:
 				return data.smallInt - value->data.smallInt;
 
@@ -359,10 +361,10 @@ int Value::compare(Value * value)
 
 			case Quad:
 				return (int) (data.quad - value->data.quad);
-			}
+		}
 
 	switch (MAX (type, value->type))
-		{
+	{
 		case Null:
 			return 0;
 
@@ -412,7 +414,7 @@ int Value::compare(Value * value)
 
 		case Date:
 			return getDate().date - value->getDate().date;
-		}
+	}
 
 	NOT_YET_IMPLEMENTED;
 
@@ -436,7 +438,7 @@ void Value::setValue(double value)
 QUAD Value::getQuad(int scale)
 {
 	switch (type)
-		{
+	{
 		case Null:
 			return 0;
 
@@ -456,7 +458,7 @@ QUAD Value::getQuad(int scale)
 			return (QUAD) data.dbl;
 
 		default:
-			{
+		{
 			double divisor;
 			QUAD quad = convertToQuad (divisor);
 			if (scale < 0)
@@ -468,8 +470,8 @@ QUAD Value::getQuad(int scale)
 			if (divisor == 1)
 				return (int) quad;
 			return (int) (quad / divisor);
-			}
 		}
+	}
 
 	return 0;
 }
@@ -477,7 +479,7 @@ QUAD Value::getQuad(int scale)
 int Value::getLong(int scale)
 {
 	switch (type)
-		{
+	{
 		case Null:
 			return 0;
 
@@ -493,17 +495,17 @@ int Value::getLong(int scale)
 		case Char:
 		case Varchar:
 		case String:
-			{
+		{
 			double divisor;
 			QUAD quad = convertToQuad (divisor);
 			if (divisor == 1)
 				return (int) quad;
 			return (int) (quad / divisor);
-			}
+		}
 
 		default:
 			NOT_YET_IMPLEMENTED;
-		}
+	}
 
 	return 0;
 }
@@ -543,7 +545,7 @@ bool Value::getBoolean()
 short Value::getShort(int scale)
 {
 	switch (type)
-		{
+	{
 		case Null:
 			return 0;
 
@@ -556,18 +558,18 @@ short Value::getShort(int scale)
 		case Char:
 		case Varchar:
 		case String:
-			{
+		{
 			double divisor;
 			QUAD quad = convertToQuad (divisor);
 			if (divisor == 1)
 				return (short) quad;
 			return (short) (quad / divisor);
-			}
+		}
 
 		case Quad:
 		default:
 			return (short) getQuad();
-		}
+	}
 
 	return 0;
 }
@@ -578,7 +580,7 @@ const char* Value::getString(char **tempPtr)
 	int		length;
 
 	switch (type)
-		{
+	{
 		case Null:
 			return "";
 
@@ -654,7 +656,7 @@ const char* Value::getString(char **tempPtr)
 
 		default:
 			NOT_YET_IMPLEMENTED;
-		}
+	}
 
 	length = (int)strlen (temp);
 
@@ -677,7 +679,7 @@ Blob* Value::getBlob()
 	BinaryBlob *blob;
 
 	switch (type)
-		{
+	{
 		case Null:
 			return new BinaryBlob;
 
@@ -690,7 +692,7 @@ Blob* Value::getBlob()
 			blob->putSegment (data.string.length, data.string.string, false);	
 			return blob;
 
-		}
+	}
 
 	NOT_YET_IMPLEMENTED;
 
@@ -801,12 +803,12 @@ TimeStamp Value::getTimestamp()
 	switch (type)
 	{
 	case Null:
-		{
+	{
 		TimeStamp timestamp;
 		timestamp.date = 0;
 		timestamp.nanos = 0;
 		return timestamp;
-		}
+	}
 
 	case Char:
 	case String:
@@ -814,20 +816,20 @@ TimeStamp Value::getTimestamp()
 		break;
 
 	case Date:
-		{
+	{
 		TimeStamp timestamp;
 		timestamp.date = getDate().date;
 		timestamp.nanos = 0;
 		return timestamp;
-		}
+	}
 
 	case TimeType:
-		{
+	{
 		TimeStamp timestamp;
 		timestamp.date = 0;
 		timestamp.nanos = getTime().timeValue;
 		return timestamp;
-		}
+	}
 
 	case Timestamp:
 		return data.timestamp;
@@ -896,14 +898,14 @@ bool Value::isNull(Type conversionType)
 
 	if (conversionType == Date)
 		switch (type)
-			{
+		{
 			case Char:
 			case String:
 			case Varchar:
 				if (data.string.length == 0)
 					return true;
 				break;
-			}
+		}
 
 	return false;
 }
@@ -913,13 +915,13 @@ void Value::add(Value * value)
 	Type maxType = MAX (type, value->type);
 
 	if (Null || value->type == Null)
-		{
+	{
 		clear();
 		return;
-		}
+	}
 
 	switch (maxType)
-		{
+	{
 		case Short:
 		case Long:
 			setValue (getLong() + value->getLong());
@@ -932,7 +934,7 @@ void Value::add(Value * value)
 
 		default:
 			NOT_YET_IMPLEMENTED;
-		}
+	}
 }
 
 void Value::add(int value)
@@ -944,42 +946,42 @@ void Value::divide(Value * value)
 {
 
 	if (Null || value->type == Null)
-		{
+	{
 		clear();
 		return;
-		}
+	}
 
 	switch (type)
-		{
+	{
 		case Short:
 		case Long:
-			{
+		{
 			int divisor = value->getLong();
 			if (divisor == 0)
 				throw SQLEXCEPTION (RUNTIME_ERROR, "integer divide by zero");
 			setValue (getLong() / divisor);
-			}
-			break;
+		}
+		break;
 
 		case Float:
 		case Double:
-			{
+		{
 			double divisor = value->getLong();
 			if (divisor == 0)
 				throw SQLEXCEPTION (RUNTIME_ERROR, "integer divide by zero");
 			setValue (getDouble() / divisor);
-			}
-			break;
+		}
+		break;
 
 		default:
 			NOT_YET_IMPLEMENTED;
-		}
+	}
 }
 
 char Value::getByte(int scale)
 {
 	switch (type)
-		{
+	{
 		case Null:
 			return 0;
 
@@ -992,7 +994,7 @@ char Value::getByte(int scale)
 		case Quad:
 		default:
 			return (char) getQuad();
-		}
+	}
 
 	return 0;
 }

@@ -37,8 +37,10 @@ bool CFbDll::LoadDll (const char * client, const char * clientDef)
 
 #ifdef _WINDOWS
 #define __ENTRYPOINT(X) _##X = (X*)GetProcAddress(_Handle, "isc_"#X)
+#define __FB_ENTRYPOINT(X) _##X = (X*)GetProcAddress(_Handle, "fb_"#X)
 #else
 #define __ENTRYPOINT(X) _##X = (X*)dlsym(_Handle, "isc_"#X)
+#define ___FB_ENTRYPOINT(X) _##X = (X*)dlsym(_Handle, "fb_"#X)
 #endif					
 
 	__ENTRYPOINT(create_database);
@@ -60,6 +62,7 @@ bool CFbDll::LoadDll (const char * client, const char * clientDef)
 	__ENTRYPOINT(array_lookup_bounds);
 
 	__ENTRYPOINT(vax_integer);
+	__ENTRYPOINT(portable_integer);
 	__ENTRYPOINT(start_transaction);
 	__ENTRYPOINT(sqlcode);
 	__ENTRYPOINT(sql_interprete);
@@ -101,6 +104,15 @@ bool CFbDll::LoadDll (const char * client, const char * clientDef)
 	__ENTRYPOINT(encode_sql_time);
 	__ENTRYPOINT(encode_timestamp);
 	__ENTRYPOINT(print_blr);
+
+	/********************/
+    /* Object interface */
+    /********************/
+	__FB_ENTRYPOINT(get_master_interface);
+	__FB_ENTRYPOINT(get_database_handle);
+	__FB_ENTRYPOINT(get_transaction_handle);
+	__FB_ENTRYPOINT(get_transaction_interface);
+	__FB_ENTRYPOINT(get_statement_interface);
 
 	return true;
 }

@@ -58,6 +58,7 @@ public:
 	static ISC_TIME getIscTime (SqlTime value);
 	static ISC_TIMESTAMP getIscTimeStamp (TimeStamp value);
 	static ISC_DATE getIscDate (DateTime date);
+	static FB_I128 getFbInt128(FbInt128 value);
 	void setValue(Value *value, XSQLVAR *var);
 	int getUpdateCounts();
 	virtual int objectVersion();

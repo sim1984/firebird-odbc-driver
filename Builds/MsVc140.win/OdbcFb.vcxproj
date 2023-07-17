@@ -368,6 +368,7 @@
     <ClInclude Include="..\..\IscDbc\Connection.h" />
     <ClInclude Include="..\..\IscDbc\DateTime.h" />
     <ClInclude Include="..\..\IscDbc\EnvShare.h" />
+    <ClInclude Include="..\..\IscDbc\Int128.h" />
     <ClInclude Include="..\..\IscDbc\IscArray.h" />
     <ClInclude Include="..\..\IscDbc\IscBlob.h" />
     <ClInclude Include="..\..\IscDbc\IscCallableStatement.h" />

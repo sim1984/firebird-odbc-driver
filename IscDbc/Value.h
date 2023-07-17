@@ -30,6 +30,7 @@
 
 #include "Types.h"
 #include "TimeStamp.h"
+#include "Int128.h"
 #include "Stream.h"
 
 #include "Blob.h"
@@ -112,12 +113,12 @@ public:
 	char		scale;
 
 	union
-		{
+	{
 		struct
-			{
+		{
 			char	*string;
 			int		length;
-			}	string;
+		}	string;
 		short		smallInt;
 		int			integer;
 		float		flt;
@@ -127,7 +128,8 @@ public:
 		DateTime	date;
 		TimeStamp	timestamp;
 		SqlTime		time;
-		} data;
+		FbInt128    i128;
+	} data;
 };
 
 }; // end namespace IscDbcLibrary

@@ -30,7 +30,7 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <ibase.h>
+#include <Firebird/Interface.h>
 #include "JString.h"
 #include "LoadFbClientDll.h"
 
@@ -139,10 +139,12 @@ typedef unsigned __int64			UQUAD;
 #define MAX_NUMERIC_LONG_LENGTH		9
 #define MAX_NUMERIC_DOUBLE_LENGTH	15
 #define MAX_NUMERIC_LENGTH			18
+#define MAX_NUMERIC_INT128_LENGTH	38
 #define MAX_DECIMAL_SHORT_LENGTH	4
 #define MAX_DECIMAL_LONG_LENGTH		9
 #define MAX_DECIMAL_DOUBLE_LENGTH	15
 #define MAX_DECIMAL_LENGTH			18
+#define MAX_DECIMAL_INT128_LENGTH	38
 #define MAX_BOOLEAN_LENGTH			1
 #define MAX_TINYINT_LENGTH			3
 #define MAX_SMALLINT_LENGTH			5
@@ -155,6 +157,7 @@ typedef unsigned __int64			UQUAD;
 #define MAX_TIME_LENGTH				13
 #define MAX_TIMESTAMP_LENGTH		24
 #define MAX_QUAD_LENGTH				18
+#define MAX_INT128_LENGTH           38
 
 namespace IscDbcLibrary 
 {

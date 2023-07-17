@@ -584,8 +584,8 @@ SQLRETURN OdbcError::sqlGetDiagRec(UCHAR * stateBuffer, SQLINTEGER * nativeCodeP
 
 SQLRETURN OdbcError::sqlGetDiagField(int diagId, SQLPOINTER ptr, int msgBufferLength, SQLSMALLINT *msgLength)
 {
-	const char *string = NULL;
-	int value;
+	const char *string = nullptr;
+	int value = 0;
 
 	switch (diagId)
 		{
