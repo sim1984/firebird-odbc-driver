@@ -366,10 +366,10 @@ void Sqlda::init()
 	sqlda = (XSQLDA*) tempSqlda;
 	sqlda->version = SQLDA_VERSION1;
 	sqlda->sqln = DEFAULT_SQLDA_COUNT;
-	buffer = NULL;
-	orgsqlvar = NULL;
-	dataStaticCursor = NULL;
-	offsetSqldata = NULL;
+	buffer = nullptr;
+	orgsqlvar = nullptr;
+	dataStaticCursor = nullptr;
+	offsetSqldata = nullptr;
 	indicatorsOffset = 0;
 	needsbuffer = true;
 }
@@ -377,8 +377,13 @@ void Sqlda::init()
 void Sqlda::remove()
 {
 	delete dataStaticCursor;
+	dataStaticCursor = nullptr;
+
 	delete [] buffer;
+	buffer = nullptr;
+
 	delete [] offsetSqldata;
+	offsetSqldata = nullptr;
 
 	deleteSqlda(); // Should stand only here!!!
 }
@@ -392,9 +397,12 @@ void Sqlda::clearSqlda()
 void Sqlda::deleteSqlda()
 {
 	delete [] orgsqlvar;
+	orgsqlvar = nullptr;
 
-	if (sqlda != (XSQLDA*) tempSqlda)
-		free (sqlda);
+	if (sqlda != (XSQLDA*)tempSqlda) {
+		free(sqlda);
+		sqlda = nullptr;
+	}
 }
 
 bool Sqlda::checkOverflow()
@@ -426,8 +434,11 @@ void Sqlda::allocBuffer ( IscStatement *stmt )
 	needsbuffer = false;
 
 	delete [] orgsqlvar;
+	orgsqlvar = nullptr;
 	delete [] buffer;
+	buffer = nullptr;
 	delete [] offsetSqldata;
+	offsetSqldata = nullptr;
 
 	int offset = 0;
 	int n = 0;
@@ -483,6 +494,10 @@ void Sqlda::allocBuffer ( IscStatement *stmt )
 		case SQL_INT64:
 		case SQL_TIMESTAMP:
 			length = sizeof (QUAD);
+			break;
+
+		case SQL_INT128:
+			length = sizeof(FB_I128);
 			break;
 
 		case SQL_BLOB:

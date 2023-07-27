@@ -161,16 +161,16 @@ typedef unsigned __int64			UQUAD;
 
 namespace IscDbcLibrary 
 {
-int getTypeStatement(IscConnection *connection, isc_stmt_handle Stmt,const void * buffer, int bufferLength, int *lengthPtr);
-int getInfoCountRecordsStatement(IscConnection *connection, isc_stmt_handle Stmt,const void * buffer, int bufferLength, int *lengthPtr);
-int getPlanStatement(IscConnection *connection, isc_stmt_handle statementHandle,const void * value, int bufferLength, int *lengthPtr);
-int getPageDatabase(IscConnection *connection, const void * info_buffer, int bufferLength,short *lengthPtr);
-int getWalDatabase(IscConnection *connection, const void * info_buffer, int bufferLength,short *lengthPtr);
-int strBuildStatInformations(const void * info_buffer, int bufferLength,short *lengthPtr);
-void getStatInformations(IscConnection *connection, char bVanCall);
-int getStatInformations(IscConnection *connection, const void * info_buffer, int bufferLength,short *lengthPtr);
-int findCharsetsCode( const char *charset );
-int getCharsetSize( int charsetCode );
+    int getTypeStatement(IscConnection *connection, isc_stmt_handle Stmt, const void * buffer, int bufferLength, int *lengthPtr);
+    int getInfoCountRecordsStatement(IscConnection *connection, isc_stmt_handle Stmt,const void * buffer, int bufferLength, int *lengthPtr);
+    int getPlanStatement(IscConnection *connection, isc_stmt_handle statementHandle,const void * value, int bufferLength, int *lengthPtr);
+    int getPageDatabase(IscConnection *connection, const void * info_buffer, int bufferLength,short *lengthPtr);
+    int getWalDatabase(IscConnection *connection, const void * info_buffer, int bufferLength,short *lengthPtr);
+    int strBuildStatInformations(const void * info_buffer, int bufferLength,short *lengthPtr);
+    void getStatInformations(IscConnection *connection, char bVanCall);
+    int getStatInformations(IscConnection *connection, const void * info_buffer, int bufferLength,short *lengthPtr);
+    int findCharsetsCode( const char *charset );
+    int getCharsetSize( int charsetCode );
 }; // end namespace IscDbcLibrary
 
 #endif

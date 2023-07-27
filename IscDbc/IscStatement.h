@@ -28,6 +28,7 @@
 #include "Connection.h"
 #include "LinkedList.h"
 #include "Sqlda.h"
+#include "Int128.h"
 
 namespace IscDbcLibrary {
 

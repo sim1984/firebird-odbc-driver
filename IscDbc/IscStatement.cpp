@@ -851,6 +851,10 @@ void IscStatement::setValue(Value *value, XSQLVAR *var)
 				value->setValue (*(QUAD*) var->sqldata, var->sqlscale);
 				break;
 
+			case SQL_INT128:
+				value->setValue(*(FbInt128*)var->sqldata, var->sqlscale);
+				break;
+
 			case SQL_BLOB:
 				{
 				IscBlob* blob = new IscBlob (this, var);

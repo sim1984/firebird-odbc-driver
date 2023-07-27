@@ -49,130 +49,153 @@ void IscSqlType::buildType ()
 	length = bufferLength = lengthIn;
 
 	switch (blrType)
-		{
+	{
 		case blr_text:
 		case blr_text2:
-			{
+		{
 			if ( length == 1 && characterId == 1 )
-				{
+			{
 				type = JDBC_TINYINT;
 				typeName = "TINYINT";
 				bufferLength = length;
 				length = MAX_TINYINT_LENGTH;
-				}
+			}
 			else
-				{
+			{
 				type = JDBC_CHAR;
 				typeName = "CHAR";
 
 				if ( characterId > 2 && lengthCharIn ) // > ASCII
-					{
+				{
 					length = lengthCharIn;
 					if ( characterId == 4 || characterId == 3 ) // UTF8 || UNICODE_FSS
 						type = JDBC_WCHAR;
-					}
 				}
 			}
-			break;
+		}
+		break;
 
 		case blr_bool:
-			{
+		{
 			type = JDBC_BOOLEAN;
 			typeName = "BOOLEAN";
 			length = MAX_BOOLEAN_LENGTH;
 			bufferLength = sizeof(bool);
 			if ( !precision ) // for calculate fields
 				precision = length;
-			}
-			break;
+		}
+		break;
 
 		case blr_short:
-			{
+		{
 			type = JDBC_SMALLINT;
 			typeName = "SMALLINT";
 			length = MAX_SMALLINT_LENGTH;
 			bufferLength = sizeof(short);
 			if ( !precision ) // for calculate fields
 				precision = length;
-			}
-			break;
+		}
+		break;
 
 		case blr_long:
-			{
+		{
 			type = JDBC_INTEGER;
 			typeName = "INTEGER";
 			length = MAX_INT_LENGTH;
 			bufferLength = sizeof(int);
 			if ( !precision ) // for calculate fields
 				precision = length;
-			}
-			break;
+		}
+		break;
 
 		case blr_quad:
 		case blr_int64:
-			{
+		{
 			type = JDBC_BIGINT;
 			typeName = "BIGINT";
 			length = MAX_QUAD_LENGTH;
 			bufferLength = MAX_QUAD_LENGTH + 2;
 			if ( !precision ) // for calculate fields
 				precision = length;
+		}
+		break;
+
+		case blr_int128:
+		{
+			type = JDBC_NUMERIC;
+			typeName = "NUMERIC";
+
+			switch (subType) {
+			case 1:
+				type = JDBC_NUMERIC;
+				typeName = "NUMERIC";
+				break;
+
+			case 2:
+				type = JDBC_DECIMAL;
+				typeName = "DECIMAL";
+				break;
 			}
-			break;
+			length = MAX_INT128_LENGTH;
+			bufferLength = MAX_INT128_LENGTH + 2;
+			if (!precision) // for calculate fields
+				precision = length;
+		}
+		break;
 
 		case blr_float:
-			{
+		{
 			type = JDBC_REAL;
 			typeName = "FLOAT";
 			length = MAX_FLOAT_LENGTH;
 			bufferLength = sizeof(float);
-			}
-			break;
+		}
+		break;
 
 		case blr_double:
 		case blr_d_float:
-			{
+		{
 			type = JDBC_DOUBLE;
 			typeName = "DOUBLE PRECISION";
 			length = MAX_DOUBLE_LENGTH;
 			bufferLength = sizeof(double);
-			}
-			break;
+		}
+		break;
 
 		case blr_varying:
 		case blr_varying2:
-			{
+		{
 			type = JDBC_VARCHAR;
 			typeName = "VARCHAR";
 
 			if ( characterId > 2 && lengthCharIn ) // > ASCII
-				{
+			{
 				length = lengthCharIn;
 				if ( characterId == 4 || characterId == 3 ) // UTF8 || UNICODE_FSS
 					type = JDBC_WVARCHAR;
-				}
 			}
-			break;
+		}
+		break;
 
 		case blr_blob:
-			{
+		{
 			if (subType == 1)
-				{
+			{
 				type = JDBC_LONGVARCHAR;
 				typeName = "LONG VARCHAR";
-				}
+			}
 			else
-				{
+			{
 				type = JDBC_LONGVARBINARY;
 				typeName = "LONG VARBINARY";
-				}
+			}
 			length = MAX_BLOB_LENGTH;
 			bufferLength = length;
-			}
-			break;
+		}
+		break;
 
 		case blr_sql_date:
-			{
+		{
 			if ( appOdbcVersion == 2 ) // SQL_OV_ODBC2
 				type = JDBC_SQL_DATE;
 			else
@@ -180,11 +203,11 @@ void IscSqlType::buildType ()
 			typeName = "DATE";
 			length = MAX_DATE_LENGTH;
 			bufferLength = 6; // sizeof(tagDATE_STRUCT); 
-			}
-			break;
+		}
+		break;
 
 		case blr_sql_time:
-			{
+		{
 			if ( appOdbcVersion == 2 ) // SQL_OV_ODBC2
 				type = JDBC_SQL_TIME;
 			else
@@ -192,11 +215,11 @@ void IscSqlType::buildType ()
 			typeName = "TIME";
 			length = MAX_TIME_LENGTH;
 			bufferLength = 6; // sizeof(tagTIME_STRUCT); 
-			}
-			break;
+		}
+		break;
 
 		case blr_timestamp:
-			{
+		{
 			if ( appOdbcVersion == 2 ) // SQL_OV_ODBC2
 				type = JDBC_SQL_TIMESTAMP;
 			else
@@ -204,15 +227,15 @@ void IscSqlType::buildType ()
 			typeName = "TIMESTAMP";
 			length = MAX_TIMESTAMP_LENGTH;
 			bufferLength = 16; // sizeof(tagTIMESTAMP_STRUCT); 
-			}
-			break;
+		}
+		break;
 
 		default:
-			{
+		{
 			typeName = "UNKNOWN";
 			type = 0;
-			}
 		}
+	}
 
 	switch ( type )
 	{	

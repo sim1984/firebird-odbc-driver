@@ -60,7 +60,12 @@ public:
 
 	void	setValue (float value);
 	void	setValue (double value);
+	void    setValue(short value, int scale = 0);
 	void	setValue (int value, int scale = 0);
+	void    setValue(QUAD value, int scale = 0);
+	void    setValue(FbInt128 value, int scale = 0);
+	void    setValue(TimeStamp value);
+	void    setValue(DateTime value);
 	void	setValue (Value *value);
 
 //protected:
@@ -75,7 +80,7 @@ public:
 	void convert (QUAD number, int scale, char *string);
 	TimeStamp getTimestamp();
 	SqlTime getTime();
-	void setValue (TimeStamp value);
+	
 	char getByte (int scale = 0);
 	void divide (Value *value);
 	void add (int value);
@@ -84,11 +89,9 @@ public:
 	void setDate (int value);
 	void setNull();
 	bool isNull();
-	void setValue (QUAD value, int scale = 0);
-	void setValue (short value, int scale = 0);
 	void allocString (Type typ, int length);
 	void getStream (Stream *stream, bool copyFlag);
-	void setValue (DateTime value);
+	
 
 	DateTime getDate();
 	QUAD convertToQuad (double& divisor);
@@ -97,10 +100,12 @@ public:
 		if (type == String && copyFlag && data.string.string)
 		{
 			delete [] data.string.string;
-			data.string.string = NULL;
+			data.string.string = nullptr;
 		}
-		else if (type == BlobPtr)
+		else if (type == BlobPtr) {
 			data.blob->release();
+			data.blob = nullptr;
+		}
 
 		type = Null;
 	}

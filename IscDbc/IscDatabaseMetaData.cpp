@@ -416,9 +416,10 @@ const char* IscDatabaseMetaData::getIdentifierQuoteString()
 	}
 
 const char* IscDatabaseMetaData::getSQLKeywords()
-	{
+{
+	// TODO: rewrite
 	return  "ACTIVE,ADMIN,AFTER,ASCENDING,AUTO,BASE_NAME,"
-			"BEFORE,BIGINT,BLOB,CACHE,CHECK_POINT_LENGTH,"
+			"BEFORE,BIGINT,BLOB,CACHE,CASE,CHECK_POINT_LENGTH,"
 			"COMMITTED,COMPUTED,CONDITIONAL,CONTAINING,CSTRING,CURRENT_CONNECTION,"
 			"CURRENT_TRANSACTION,DATABASE,DEBUG,DESCENDING,ENTRY_POINT,"
 			"EXIT,FILE,FILTER,FIRST,FREE_IT,FUNCTION,GDSCODE,GENERATOR,GEN_ID,"
@@ -432,7 +433,7 @@ const char* IscDatabaseMetaData::getSQLKeywords()
 			"SINGULAR,SNAPSHOT,SORT,STABILITY,STARTING,STARTS,"
 			"STATISTICS,SUB_TYPE,SUSPEND,TRIGGER,TYPE,UNCOMMITTED,VARIABLE,"
 			"WAIT,WEEKDAY,WHILE,YEARDAY";
-	}
+}
 
 const char* IscDatabaseMetaData::getNumericFunctions()
 	{
@@ -567,7 +568,7 @@ bool IscDatabaseMetaData::supportsDifferentTableCorrelationNames()
 
 bool IscDatabaseMetaData::supportsExpressionsInOrderBy()
 	{
-	return false;
+	return true;
 	}
 
 bool IscDatabaseMetaData::supportsOrderByUnrelated()

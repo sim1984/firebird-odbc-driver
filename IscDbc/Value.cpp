@@ -83,14 +83,6 @@ Value::~Value()
 }
 
 
-void Value::setValue (int number, int scl)
-{
-	clear();
-	type = Long;
-	scale = scl;
-	data.integer = number;
-}
-
 void Value::setString(const char * string, bool copy)
 {
 	clear();
@@ -433,6 +425,38 @@ void Value::setValue(double value)
 	clear();
 	type = Double;
 	data.dbl = value;
+}
+
+void Value::setValue(short value, int scl)
+{
+	clear();
+	type = Short;
+	scale = scl;
+	data.smallInt = value;
+}
+
+void Value::setValue(int number, int scl)
+{
+	clear();
+	type = Long;
+	scale = scl;
+	data.integer = number;
+}
+
+void Value::setValue(QUAD value, int scl)
+{
+	clear();
+	type = Quad;
+	scale = scl;
+	data.quad = value;
+}
+
+void Value::setValue(FbInt128 value, int scl)
+{
+	clear();
+	type = Int128;
+	scale = scl;
+	data.i128 = value;
 }
 
 QUAD Value::getQuad(int scale)
@@ -862,22 +886,6 @@ void Value::allocString(Type typ, int length)
 	data.string.length = length;
 	data.string.string = new char [length + 1];
 	data.string.string [length] = 0;
-}
-
-void Value::setValue(short value, int scl)
-{
-	clear();
-	type = Short;
-	scale = scl;
-	data.smallInt = value;
-}
-
-void Value::setValue(QUAD value, int scl)
-{
-	clear();
-	type = Quad;
-	scale = scl;
-	data.quad = value;
 }
 
 bool Value::isNull()
